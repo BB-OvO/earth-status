@@ -25,6 +25,24 @@ function getRadius(aqi: number): number {
 export default function PollutionMap({ data }: PollutionMapProps) {
   const [position] = useState<[number, number]>([35, 105])
   const [zoom] = useState(4)
+  const [hasError, setHasError] = useState(false)
+
+  useEffect(() => {
+    const handleError = () => setHasError(true)
+    window.addEventListener('error', handleError)
+    return () => window.removeEventListener('error', handleError)
+  }, [])
+
+  if (hasError) {
+    return (
+      <div className="w-full h-[600px] bg-background border border-border rounded-lg flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-secondary text-lg mb-2">地图加载失败</p>
+          <p className="text-secondary text-sm">请刷新页面重试</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="w-full h-[600px] bg-background border border-border rounded-lg overflow-hidden">
@@ -37,7 +55,8 @@ export default function PollutionMap({ data }: PollutionMapProps) {
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          maxZoom={19}
         />
         {data.map((item, index) => (
           <Circle
