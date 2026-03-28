@@ -1,0 +1,5 @@
+export { default as GlobalCounters } from './GlobalCounters'
+export { default as PollutionMap } from './PollutionMap'
+export { default as ActionSuggestion } from './ActionSuggestion'
+export { default as Navbar } from './Navbar'
+export { default as Footer } from './Footer'
