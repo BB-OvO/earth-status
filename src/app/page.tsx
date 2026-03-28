@@ -1,15 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 import { Navbar } from '@/components'
 import { Footer } from '@/components'
 import { GlobalCounters } from '@/components'
 import { ActionSuggestion } from '@/components'
 import { mockAQIData } from '@/data/mockData'
 
+// Force dynamic rendering to prevent pre-rendering
+export const dynamic = 'force-dynamic'
+
 // Dynamic import with ssr: false to prevent window error
-const PollutionMap = dynamic(() => import('@/components/PollutionMap'), {
+const PollutionMap = dynamicImport(() => import('@/components/PollutionMap'), {
   ssr: false,
   loading: () => (
     <div className="w-full h-[600px] bg-background border border-border rounded-lg flex items-center justify-center">
