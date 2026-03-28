@@ -1,28 +1,16 @@
-'use client'
+import dynamic from 'next/dynamic'
+import { Navbar, Footer, GlobalCounters, ActionSuggestion } from '@/components'
 
-import { useEffect, useState } from 'react'
-import { Navbar, Footer, GlobalCounters, ActionSuggestion, MapWrapper } from '@/components'
-
-export const dynamic = 'force-dynamic'
+const MapWrapper = dynamic(() => import('@/components/MapWrapper'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[600px] bg-background border border-border rounded-lg flex items-center justify-center">
+      <p className="text-secondary">地图加载中...</p>
+    </div>
+  ),
+})
 
 export default function HomePage() {
-  const [isClient, setIsClient] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  if (!isClient) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-primary mb-4">地球状态</h1>
-          <p className="text-secondary">加载中...</p>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
