@@ -1,14 +1,4 @@
-import dynamic from 'next/dynamic'
 import { Navbar, Footer, GlobalCounters, ActionSuggestion } from '@/components'
-
-const MapWrapper = dynamic(() => import('@/components/MapWrapper'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[600px] bg-background border border-border rounded-lg flex items-center justify-center">
-      <p className="text-secondary">地图加载中...</p>
-    </div>
-  ),
-})
 
 export default function HomePage() {
   return (
@@ -18,7 +8,12 @@ export default function HomePage() {
         <GlobalCounters />
         <div className="container mx-auto px-4 py-8">
           <h2 className="text-2xl font-bold text-primary mb-6">交互式污染地图</h2>
-          <MapWrapper />
+          <div className="w-full h-[600px] bg-background border border-border rounded-lg flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-secondary text-lg mb-2">地图暂时不可用</p>
+              <p className="text-secondary text-sm">正在修复中...</p>
+            </div>
+          </div>
           <ActionSuggestion />
         </div>
       </main>
