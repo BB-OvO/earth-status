@@ -1,35 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import dynamicImport from 'next/dynamic'
-import { Navbar } from '@/components'
-import { Footer } from '@/components'
-import { GlobalCounters } from '@/components'
-import { ActionSuggestion } from '@/components'
-import { mockAQIData } from '@/data/mockData'
+import { Navbar, Footer, GlobalCounters, ActionSuggestion, MapWrapper } from '@/components'
 
-// Force dynamic rendering to prevent pre-rendering
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
-// Dynamic import with ssr: false to prevent window error
-const PollutionMap = dynamicImport(() => import('@/components/PollutionMap'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[600px] bg-background border border-border rounded-lg flex items-center justify-center">
-      <p className="text-secondary">地图加载中...</p>
-    </div>
-  ),
-})
-
-// Force client component
 export default function HomePage() {
-  const [mounted, setMounted] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
+    setIsClient(true)
   }, [])
 
-  if (!mounted) {
+  if (!isClient) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
@@ -47,7 +31,7 @@ export default function HomePage() {
         <GlobalCounters />
         <div className="container mx-auto px-4 py-8">
           <h2 className="text-2xl font-bold text-primary mb-6">交互式污染地图</h2>
-          <PollutionMap data={mockAQIData} />
+          <MapWrapper />
           <ActionSuggestion />
         </div>
       </main>
