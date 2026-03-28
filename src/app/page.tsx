@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { Navbar, Footer, GlobalCounters, ActionSuggestion, MapWrapper } from '@/components'
 
 export const dynamic = 'force-dynamic'
-export const revalidate = 0
 
 export default function HomePage() {
   const [isClient, setIsClient] = useState(false)
